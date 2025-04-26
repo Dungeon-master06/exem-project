@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.urls import path
-from apps.exams.views import home, contact
-from apps.books.views import book_list, download_book
+from apps.exams.views import (home, contact, faq)
+from apps.books.views import (book_list, download_book)
 
 from django.conf.urls.static import static
 from django.conf import settings
@@ -10,6 +10,7 @@ urlpatterns = [
     path('', home, name='home'),
     path('books/', book_list, name='books'),
     path('contact/', contact, name='contact'),
+    path('faq/', faq, name='faq'),
     path('download/<int:pk>/', download_book, name='download-book'),
 ]
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
