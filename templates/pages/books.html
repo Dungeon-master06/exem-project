@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Онлайн Библиотека</title>
+</head>
+<body>
+    <h1>Книги</h1>
+    <ul>
+        {% for book in books %}
+            <ul>
+                {% if book.cover_image %}
+                    <img src="{{ book.cover_image.url }}" alt="{{ book.title }}" width="100">
+                {% endif %}
+                <h3>{{ book.title }}</h3>{{ book.author }}<br>
+                <p>{{ book.description|truncatewords:20 }}</p><br>
+                <a href="{% url 'download-book' book.pk %}">📥 Скачать</a>
+            </ul>
+        {% empty %}
+            <li>Книг пока нет.</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
