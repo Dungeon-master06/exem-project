@@ -10,13 +10,13 @@
 <body>
     {% include "header.html" %}
     <div class="content" style="padding:10px 20px 10px 20px;">
-        <h1>Контакты</h1>
+        <h1 class="mb-4">Контакты</h1>
         {% for set in settings %}
         <div>
-            <p>Address: {{ set.address }}</p>
-            <p>Phone: {{ set.phone }}<br />Email: {{ set.email }}</p>
+            <p>Адрес: {{ set.address }}</p>
+            <p>Телефон: {{ set.phone }}<br />Email: {{ set.email }}</p>
         </div>
-        
+        <a>{{ set.map|safe }}</a>
         {% endfor %}
     </div>
     {% include "footer.html" %}
