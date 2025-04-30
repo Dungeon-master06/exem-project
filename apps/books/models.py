@@ -16,7 +16,7 @@ class Category(models.Model):
         verbose_name_plural = 'Категории книг'
 
 class Book(models.Model):
-    category = models.ForeignKey(Category, on_delete=models.CASCADE,default=1, verbose_name="категория")
+    category = models.ForeignKey(Category, on_delete=models.CASCADE,default=1,related_name='books', verbose_name="категория")
     title = models.CharField(max_length=255, verbose_name="Название")
     author = models.CharField(max_length=255, verbose_name="Автор")
     description = models.TextField(blank=True, verbose_name='Описание')

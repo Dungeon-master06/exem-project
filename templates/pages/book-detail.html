@@ -8,8 +8,9 @@
 </head>
 <body class="bg-light">
 {% include "header.html" %}
+<a href="{% url 'books' %}" class="btn btn-secondary mt-3 ms-3">⬅ Назад в библиотеку</a>
 <div class="container py-5">
-    <div class="card mx-auto shadow-sm" style="max-width: 400px;"> <!-- 👈 Сделали max-width: 400px -->
+    <div class="card mx-auto shadow-sm" style="max-width: 400px;">
         {% if book.cover_image %}
             <img src="{{ book.cover_image.url }}" class="card-img-top" alt="{{ book.title }}">
         {% endif %}
@@ -19,7 +20,7 @@
             <p class="card-text mt-2 text-center">{{ book.description }}</p>
             <div class="d-grid gap-2">
                 <a href="{% url 'download-book' book.pk %}" class="btn btn-success">📥 Скачать книгу</a>
-                <a href="{% url 'books' %}" class="btn btn-secondary">⬅ Назад в библиотеку</a>
+                <a href="{{ book.file.url }}" class="btn btn-primary">📖 Прочить книгу</a>
             </div>
         </div>
     </div>

@@ -3,13 +3,26 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <title>📚 Онлайн Библиотека</title>
-	<link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
+    <title>Все книги</title>
+    <link href="{% static 'css/bootstrap.css' %}" rel="stylesheet">
 </head>
-{% include "header.html" %}
 <body class="bg-light">
-<div class="container py-5">
-    <h1 class="mb-4 text-center">📚 Онлайн Библиотека</h1>
+{% include "header.html" %}
+
+<div class="container py-4">
+    <h1 class="mb-4 text-center">Все книги</h1>
+
+    <!-- Категории -->
+    <div class="mb-4 text-center">
+        <a href="{% url 'books' %}" class="btn btn-outline-dark btn-sm {% if not category_id %}active{% endif %}">Все</a>
+        {% for category in categories %}
+            <a href="?category={{ category.id }}" class="btn btn-outline-primary btn-sm {% if category_id|add:'' == category.id|stringformat:'s' %}active{% endif %}">
+                {{ category.title }}
+            </a>
+        {% endfor %}
+    </div>
+
+    <!-- Сетка книг -->
     <div class="row row-cols-1 row-cols-md-5 g-4">
         {% for book in books %}
             <div class="col">
@@ -32,6 +45,9 @@
         {% empty %}
             <p>Книг пока нет.</p>
         {% endfor %}
+    </div>
+    <div class="text-end mb-3">
+        <a href="{% url 'book-add' %}" class="btn btn-success">➕ Добавить книгу</a>
     </div>
 </div>
 {% include "footer.html" %}
