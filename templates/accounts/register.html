@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Регистрация</title>
+    <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
+</head>
+<body>
+    {% include "header.html" %}
+    <section class="vh-100 gradient-custom">
+        <div class="mask d-flex align-items-center h-100 gradient-custom-3">
+            <div class="container h-100">
+            <div class="row d-flex justify-content-center align-items-center h-100">
+                <div class="col-12 col-md-8 col-lg-6 col-xl-6">
+                <div class="card bg-dark text-white" style="border-radius: 15px;">
+                    <div class="card-body p-5">
+                    <h2 class="text-uppercase text-center mb-5">Регистрация</h2>
+
+                    <form method="POST">
+                        {% csrf_token %}
+                        <div data-mdb-input-init class="form-outline mb-2">
+                        <input type="text" id="login" name="login" class="form-control form-control-lg" />
+                        <label class="form-label" for="form3Example1cg">Ваше имя</label>
+                        </div>
+
+                        <div data-mdb-input-init class="form-outline mb-2">
+                        <input type="password" id="password" name="password" class="form-control form-control-lg" />
+                        <label class="form-label" for="form3Example4cg">Пароль</label>
+                        </div>
+
+                        <div data-mdb-input-init class="form-outline mb-2">
+                        <input type="password" id="password2" name="password2" class="form-control form-control-lg" />
+                        <label class="form-label" for="form3Example4cdg">Повторите пароль</label>
+                        </div>
+
+                        <div class="d-flex justify-content-center">
+                            <button data-mdb-button-init data-mdb-ripple-init class="btn btn-outline-light btn-lg px-5" type="submit">Регистрации</button>
+                        </div>
+                        {% if error %}
+                            <p style="color:red; text-align: center; margin-top: 10px">{{error}}</p>
+                        {% endif %}
+
+                        <p class="text-center mt-1 mb-0">У вас уже есть аккаунт? <a href="{% url 'login' %}"
+                            class="fw-bold text-white-5">Войти</a></p>
+
+                    </form>
+
+                    </div>
+                </div>
+                </div>
+            </div>
+            </div>
+        </div>
+    </section>
+    <style>
+        .gradient-custom {
+        /* fallback for old browsers */
+        background: #6a11cb;
+
+        /* Chrome 10-25, Safari 5.1-6 */
+        background: -webkit-linear-gradient(to right, rgba(106, 17, 203, 1), rgba(37, 117, 252, 1));
+
+        /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+        background: linear-gradient(to right, rgba(106, 17, 203, 1), rgba(37, 117, 252, 1))
+        }
+    </style>
+    {% include "footer.html" %}
+</body>
+</html>

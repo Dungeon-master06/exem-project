@@ -1,5 +1,6 @@
 from django.db import models
 from django.urls import reverse
+from django.core.validators import MinValueValidator, MaxValueValidator
 
 class Category(models.Model):
     title = models.CharField(max_length=100, verbose_name="Название")
@@ -23,8 +24,8 @@ class Book(models.Model):
     file = models.FileField(upload_to='books/' , verbose_name="Файл")
     cover_image = models.ImageField(upload_to='images/', blank=True, null=True, verbose_name="Обложка")
     uploaded_at = models.DateTimeField(auto_now_add=True, verbose_name="Дата загрузки")
-    pages = models.IntegerField(default=0,verbose_name="Количество страниц")
-    year = models.CharField(max_length=25,verbose_name="Год")
+    pages = models.PositiveBigIntegerField(validators=[MinValueValidator(100)], default=0, verbose_name="Количество страниц")
+    year = models.PositiveIntegerField(validators=[MaxValueValidator(2025)],max_length=4,verbose_name="Год")
 
     def __str__(self):
         return self.title
