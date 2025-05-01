@@ -40,7 +40,8 @@ INSTALLED_APPS = [
     'apps.books',
     'apps.exams',
     'apps.users',
-    'mptt',
+    'ckeditor',
+    'ckeditor_uploader',
 ]
 
 MIDDLEWARE = [
@@ -121,6 +122,8 @@ USE_TZ = True
 STATIC_URL = 'static/' 
 STATIC_DIR = BASE_DIR / 'static' 
 STATICFILES_DIRS = [STATIC_DIR]
+
+CKEDITOR_UPLOAD_PATH = "uploads/"
 
 MEDIA_ROOT = BASE_DIR / 'media' 
 MEDIA_URL = '/media/'

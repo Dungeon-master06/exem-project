@@ -17,3 +17,14 @@ class Settings(models.Model):
     class Meta:
         verbose_name = 'Настройка'
         verbose_name_plural = 'Настройки'
+
+class FAQ(models.Model):
+    question = models.CharField(max_length=255, verbose_name="Вопрос")
+    answer = RichTextField(verbose_name="Ответ")
+
+    def __str__(self):
+        return self.question
+
+    class Meta:
+        verbose_name = 'Вопрос'
+        verbose_name_plural = 'Вопросы'

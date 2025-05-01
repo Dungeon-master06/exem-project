@@ -28,6 +28,8 @@ def book_list(request):
         "category_id": category_id,
         'search_query': search_query,
         'author_filter': author_filter,
+        'total_books': Book.objects.count(),
+        'total_categories': Category.objects.count(),
     }
     return render(request, 'pages/books.html', context)
 
@@ -46,6 +48,7 @@ def download_book(request, pk):
 
 @staff_member_required(login_url='/login/')
 def create_book(request):
+    settings = Settings.objects.latest('id')
     if request.method == 'POST':
         book_form = BookForm(request.POST, request.FILES)
         category_form = CategoryForm(request.POST)
@@ -60,8 +63,9 @@ def create_book(request):
     else:
         book_form = BookForm()
         category_form = CategoryForm()
-
-    return render(request, 'pages/book_form.html', {
+    context = {
         'book_form': book_form,
         'category_form': category_form,
-    })
+        'settings': settings
+    }
+    return render(request, 'pages/book_form.html', context)

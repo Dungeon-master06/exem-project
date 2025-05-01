@@ -6,10 +6,24 @@
     <title>Все книги</title>
     <link href="{% static 'css/bootstrap.css' %}" rel="stylesheet">
 </head>
-<body class="bg-light">
+<body >
     {% include "header.html" %}
         <div class="container py-4">
-            <h1 class="mb-4 text-center">Все книги</h1>
+            <h1 class="mb-4 text-center">📚 Все книги</h1>
+            <div class="row text-center mb-4">
+                <div class="col-md-6">
+                    <div class="bg-white shadow-sm rounded p-3 border">
+                        <h5 class="mb-0">📙 Книг</h5>
+                        <p class="fs-4 fw-bold mb-0">{{ total_books }}</p>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="bg-white shadow-sm rounded p-3 border">
+                        <h5 class="mb-0">🗂 Категорий</h5>
+                        <p class="fs-4 fw-bold mb-0">{{ total_categories }}</p>
+                    </div>
+                </div>
+            </div>
             <!-- Фильтры -->
             <form method="get" class="mb-4 row g-2">
                 <div class="col-md-4">
@@ -25,7 +39,7 @@
                     <a href="{% url 'books' %}" class="btn btn-outline-secondary w-100">Сброс</a>
                 </div>
             </form>
-
+            
             {% if user.is_superuser%}
             <div class="text-start mb-3">
                 <a href="{% url 'book-add' %}" class="btn btn-success">➕ Добавить книгу</a>

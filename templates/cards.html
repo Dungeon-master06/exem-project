@@ -1,5 +1,21 @@
 {% load static %}
-<h1 >Актуальные Тесты</h1>
+<div class="container py-4">
+<h1 class="mb-4 text-center">📌 Актуальные Тесты</h1>
+  <div class="row text-center mb-4 mt-4">
+    <div class="col-md-6">
+        <div class="bg-white shadow-sm rounded p-3 border">
+            <h5 class="mb-0">👥 Пользователей</h5>
+            <p class="fs-4 fw-bold mb-0">{{ total_users }}</p>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="bg-white shadow-sm rounded p-3 border">
+            <h5 class="mb-0">👥 Тестов</h5>
+            <p class="fs-4 fw-bold mb-0">1</p>
+        </div>
+    </div>
+  </div>
+</div>
 <div style="padding: 20px; display: flex;justify-content: space-between;">
     <div class="card" style="width: 18rem; display: flex; flex-wrap: wrap; background-color: rgb(228, 228, 228);">
         <img src="https://mdbcdn.b-cdn.net/img/new/standard/city/062.webp" class="card-img-top" alt="Chicago Skyscrapers"/>

@@ -21,7 +21,7 @@
     </style>
 </head>
 <body>
-
+{% include "header.html" %}
 <div class="container py-5">
     <div class="row justify-content-center">
         <div class="col-lg-7">
@@ -78,11 +78,11 @@
             </div>
 
             <div class="text-center">
-                <a href="{% url 'books' %}" class="btn btn-link">⬅ Назад к списку книг</a>
+                <a href="{% url 'books' %}" class="btn btn-outline-primary">⬅ Назад к списку книг</a>
             </div>
         </div>
     </div>
 </div>
-
+{% include "footer.html" %}
 </body>
 </html>

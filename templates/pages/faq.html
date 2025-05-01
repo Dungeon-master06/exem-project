@@ -1,32 +1,43 @@
 <!DOCTYPE html>
 {% load static %}
-<html lang="en">
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FAQ</title>
-    <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
+    <title>FAQ – Часто задаваемые вопросы</title>
+    <link href="{% static 'css/bootstrap.css' %}" rel="stylesheet">
 </head>
-<body>
+<body class="bg-light">
     {% include "header.html" %}
-    <div class="content" style="padding:10px 20px 10px 20px;">
-        <h1 class="mb-4">FAQ</h1>
-        <h3>Часто задаваемые вопросы</h3>
-        <div class="accordion" id="accordionExample">
-        <div class="accordion-item">
-            <h2 class="accordion-header">
-            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                Accordion Item #1
-            </button>
-            </h2>
-            <div id="collapseOne" class="accordion-collapse collapse show" data-bs-parent="#accordionExample">
-            <div class="accordion-body">
-                <strong>This is the first item's accordion body.</strong> It is shown by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
-            </div>
+        <div class="container py-5">
+            <h2 class="mb-4 text-center">❓ Часто задаваемые вопросы</h2>
+            <div class="accordion" id="faqAccordion">
+                {% for faq in faqs %}
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="heading{{ forloop.counter }}">
+                        <button class="accordion-button {% if not forloop.first %}collapsed{% endif %}" type="button"
+                                data-bs-toggle="collapse"
+                                data-bs-target="#collapse{{ forloop.counter }}"
+                                aria-expanded="{% if forloop.first %}true{% else %}false{% endif %}"
+                                aria-controls="collapse{{ forloop.counter }}">
+                            {{ faq.question }}
+                        </button>
+                    </h2>
+                    <div id="collapse{{ forloop.counter }}"
+                        class="accordion-collapse collapse {% if forloop.first %}show{% endif %}"
+                        aria-labelledby="heading{{ forloop.counter }}"
+                        data-bs-parent="#faqAccordion">
+                        <div class="accordion-body">
+                            {{ faq.answer|safe }}
+                        </div>
+                    </div>
+                </div>
+                {% empty %}
+                <p class="text-center">Пока нет ни одного вопроса.</p>
+                {% endfor %}
             </div>
         </div>
-    </div>
-    </div>
     {% include "footer.html" %}
+
 </body>
+<script src="{% static 'js/bootstrap.js' %}"></script>
 </html>
