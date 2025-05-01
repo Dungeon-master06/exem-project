@@ -20,7 +20,7 @@ class Settings(models.Model):
 
 class FAQ(models.Model):
     question = models.CharField(max_length=255, verbose_name="Вопрос")
-    answer = RichTextField(verbose_name="Ответ")
+    answer = RichTextField(verbose_name="Ответ",config_name='default')
 
     def __str__(self):
         return self.question
@@ -28,3 +28,15 @@ class FAQ(models.Model):
     class Meta:
         verbose_name = 'Вопрос'
         verbose_name_plural = 'Вопросы'
+
+class SocialLink(models.Model):
+    name = models.CharField(max_length=100, verbose_name="Название")
+    url = models.URLField(verbose_name="Ссылка")
+    icon = models.CharField(max_length=100, help_text='CSS-класс иконки Bootstrap, пример: bi bi-twitter, bi bi-instagram', verbose_name="Иконка")
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name = 'Социальная сеть'
+        verbose_name_plural = 'Социальные сети'
