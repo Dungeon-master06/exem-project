@@ -2,6 +2,7 @@ from django.shortcuts import render
 from .models import Settings, FAQ, SocialLink
 from django.contrib.auth.models import User
 
+
 def home(request):
     settings = Settings.objects.latest('id')
     social_links = SocialLink.objects.all()
@@ -12,6 +13,7 @@ def home(request):
     }
     return render(request, 'index.html', context)
 
+
 def contact(request):
     settings = Settings.objects.latest('id')
     social_links = SocialLink.objects.all()
@@ -20,6 +22,7 @@ def contact(request):
         'social_links': social_links,
     }
     return render(request, 'pages/contact.html', context)
+
 
 def faq(request):
     settings = Settings.objects.latest('id')
@@ -31,6 +34,7 @@ def faq(request):
         'social_links': social_links
     }
     return render(request, 'pages/faq.html', context)
+
 
 def social_links(request):
     return {

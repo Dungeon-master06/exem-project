@@ -2,9 +2,11 @@ from django.db import models
 from django.urls import reverse
 from django.core.validators import MinValueValidator, MaxValueValidator
 
+
 class Category(models.Model):
     title = models.CharField(max_length=100, verbose_name="Название")
     slug = models.SlugField(unique=True, blank=True, null=True)
+    
 
     def __str__(self):
         return self.title
@@ -16,8 +18,9 @@ class Category(models.Model):
         verbose_name = 'Категории книг'
         verbose_name_plural = 'Категории книг'
 
+
 class Book(models.Model):
-    category = models.ForeignKey(Category, on_delete=models.CASCADE,default=1,related_name='books', verbose_name="категория")
+    category = models.ManyToManyField(Category, related_name='books', verbose_name="категория")
     title = models.CharField(max_length=255, verbose_name="Название")
     author = models.CharField(max_length=255, verbose_name="Автор")
     description = models.TextField(blank=True, verbose_name='Описание')

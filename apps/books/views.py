@@ -11,11 +11,11 @@ def book_list(request):
     settings = Settings.objects.latest('id')
     categories = Category.objects.all()
     social_links = SocialLink.objects.all()
-    category_id = request.GET.get('category')
+    category_id = request.GET.get('category', '')
     search_query = request.GET.get('q', '')
     author_filter = request.GET.get('author', '')
     if category_id:
-        books = Book.objects.filter(category_id=category_id)
+        books = Book.objects.filter(category__id=category_id)
     else:
         books = Book.objects.all()
     if search_query:

@@ -1,6 +1,7 @@
 from django.db import models
 from ckeditor.fields import RichTextField
 
+
 class Settings(models.Model):
     name = models.CharField(max_length=100, verbose_name="Название сайта")
     logo = models.ImageField(upload_to='images', verbose_name="Лого")
@@ -18,6 +19,7 @@ class Settings(models.Model):
         verbose_name = 'Настройка'
         verbose_name_plural = 'Настройки'
 
+
 class FAQ(models.Model):
     question = models.CharField(max_length=255, verbose_name="Вопрос")
     answer = RichTextField(verbose_name="Ответ",config_name='default')
@@ -28,6 +30,7 @@ class FAQ(models.Model):
     class Meta:
         verbose_name = 'Вопрос'
         verbose_name_plural = 'Вопросы'
+
 
 class SocialLink(models.Model):
     name = models.CharField(max_length=100, verbose_name="Название")
