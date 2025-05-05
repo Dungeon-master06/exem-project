@@ -1,42 +1,34 @@
-from django.shortcuts import render
-from .models import Settings, FAQ, SocialLink
-from django.contrib.auth.models import User
+from django.shortcuts import render, get_object_or_404
+from .models import Test, Question, Answer
 
 
-def home(request):
-    settings = Settings.objects.latest('id')
-    social_links = SocialLink.objects.all()
+def test_list(request):
+    # Список всех тестов для учеников
+    tests = Test.objects.all()
     context = {
-        'settings': settings,
-        'social_links': social_links,
-        'total_users': User.objects.count()
+        'tests':tests,
     }
-    return render(request, 'index.html', context)
+    return render(request, 'exams/test_list.html', context)
 
-
-def contact(request):
-    settings = Settings.objects.latest('id')
-    social_links = SocialLink.objects.all()
+def take_test(request, test_id):
+    # Страница для прохождения теста
+    test = get_object_or_404(Test, id=test_id)
+    
+    if request.method == 'POST':
+        # подсчет баллов
+        score = 0 
+        for question in test.questions.all():
+            selected_answer_id = request.POST.get(f'q_{question.id}')
+            if selected_answer_id:
+                if Answer.objects.get(id=selected_answer_id).is_correct:
+                    score+=1
+        context = {
+            'test':test,
+            'score':score,
+            'total':test.questions.count(),
+        }
+        return render(request, 'exams/test_result.html', context)
     context = {
-        'settings': settings,
-        'social_links': social_links,
+        'test':test
     }
-    return render(request, 'pages/contact.html', context)
-
-
-def faq(request):
-    settings = Settings.objects.latest('id')
-    faqs = FAQ.objects.all()
-    social_links = SocialLink.objects.all()
-    context = {
-        'settings': settings,
-        'faqs': faqs,
-        'social_links': social_links
-    }
-    return render(request, 'pages/faq.html', context)
-
-
-def social_links(request):
-    return {
-        'social_links': SocialLink.objects.all()
-    }
+    return render(request, 'exams/take_test.html', context)
