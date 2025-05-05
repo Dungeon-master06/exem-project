@@ -1,12 +1,18 @@
 from django.contrib import admin
-from .models import Settings, FAQ, SocialLink
+from .models import Test, Question, Answer
 
-@admin.register(FAQ)
-class FAQAdmin(admin.ModelAdmin):
-    list_display = ('question',)
 
-@admin.register(SocialLink)
-class SocialLinkAdmin(admin.ModelAdmin):
-    list_display = ('name', 'url', 'icon')
+class AnswerInline(admin.TabularInline):  # Или StackedInline для вертикального отображения
+    model = Answer
+    extra = 4  # Количество пустых полей для ответов
 
-admin.site.register(Settings)
+class QuestionAdmin(admin.ModelAdmin):
+    inlines = [AnswerInline]  # Добавляем ответы прямо в вопрос
+
+class TestAdmin(admin.ModelAdmin):
+    list_display = ('title', 'subject')
+    search_fields = ('title', 'subject')
+
+admin.site.register(Test, TestAdmin)
+admin.site.register(Question, QuestionAdmin)
+# Answer не регистрируем отдельно, т.к. он уже в QuestionAdmin через Inline

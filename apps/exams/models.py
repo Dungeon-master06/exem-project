@@ -1,45 +1,43 @@
 from django.db import models
-from ckeditor.fields import RichTextField
 
 
-class Settings(models.Model):
-    name = models.CharField(max_length=100, verbose_name="Название сайта")
-    logo = models.ImageField(upload_to='images', verbose_name="Лого")
-    phone1 = models.CharField(
-        max_length=20, verbose_name="Телефон",
-        help_text="Вы можете начать номер телефона с +996 (700) 700 700")
-    email = models.CharField(max_length=100, verbose_name="E-mail")
-    address = models.CharField(max_length=255, verbose_name="Адрес",null=True)
-    map = models.TextField(verbose_name="карта", null=True)
-
-    def __str__(self):
-        return f"{self.name} {self.phone1}"
+class Test(models.Model):
+    title = models.CharField(max_length=200, verbose_name="Название теста")
+    subject = models.CharField(max_length=100, verbose_name="Предмет")
+    description = models.TextField(blank=True, verbose_name="Описание")
 
     class Meta:
-        verbose_name = 'Настройка'
-        verbose_name_plural = 'Настройки'
-
-
-class FAQ(models.Model):
-    question = models.CharField(max_length=255, verbose_name="Вопрос")
-    answer = RichTextField(verbose_name="Ответ",config_name='default')
+        verbose_name = "Тест"  # Название в единственном числе (админка)
+        verbose_name_plural = "Тесты"  # Название во множественном числе
+        ordering = ['title']  # Сортировка по названию (можно добавить `-created_at` если добавить поле даты)
 
     def __str__(self):
-        return self.question
+        return self.title
+    
+
+
+class Question(models.Model):
+    test = models.ForeignKey(Test, on_delete=models.CASCADE, related_name='questions', verbose_name="Тест")
+    text = models.TextField(verbose_name="Текст вопроса")
 
     class Meta:
-        verbose_name = 'Вопрос'
-        verbose_name_plural = 'Вопросы'
-
-
-class SocialLink(models.Model):
-    name = models.CharField(max_length=100, verbose_name="Название")
-    url = models.URLField(verbose_name="Ссылка")
-    icon = models.CharField(max_length=100, help_text='CSS-класс иконки Bootstrap, пример: bi bi-twitter, bi bi-instagram', verbose_name="Иконка")
+        verbose_name = "Вопрос"
+        verbose_name_plural = "Вопросы"
+        ordering = ['id']  # Сортировка по порядку создания (можно заменить на `test` или другое поле)
 
     def __str__(self):
-        return self.name
+        return f"Вопрос #{self.id}: {self.text[:50]}..."  # Укороченное отображение
+
+
+class Answer(models.Model):
+    question = models.ForeignKey(Question, on_delete=models.CASCADE, related_name='answers', verbose_name="Вопрос")
+    text = models.CharField(max_length=200, verbose_name="Текст ответа")
+    is_correct = models.BooleanField(default=False, verbose_name="Правильный ответ?")
 
     class Meta:
-        verbose_name = 'Социальная сеть'
-        verbose_name_plural = 'Социальные сети'
+        verbose_name = "Ответ"
+        verbose_name_plural = "Ответы"
+        ordering = ['question', 'id']  # Сортировка сначала по вопросу, затем по ID
+
+    def __str__(self):
+        return f"Ответ: {self.text[:30]}... ({'✓' if self.is_correct else '✗'})"  # С пометкой правильности

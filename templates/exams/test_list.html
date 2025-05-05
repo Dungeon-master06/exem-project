@@ -1,0 +1,8 @@
+<h1>Доступные тесты</h1>
+<ul>
+    {% for test in tests %}
+        <li>
+            <a href="{% url 'take_test' test.id %}">{{ test.title }}</a> ({{ test.subject }})
+        </li>
+    {% endfor %}
+</ul>

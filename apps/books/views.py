@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404
 from django.http import FileResponse
 from .models import Book, Category
-from apps.exams.models import Settings, SocialLink
+from apps.settingis.models import Settings, SocialLink
 from .form import BookForm, CategoryForm
 from django.shortcuts import redirect
 from django.contrib.admin.views.decorators import staff_member_required

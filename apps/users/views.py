@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from django.contrib.auth import authenticate, login as user_login, logout as user_logout, get_user_model
-from apps.exams.models import Settings
+from apps.settingis.models import Settings
 User = get_user_model()
 
 

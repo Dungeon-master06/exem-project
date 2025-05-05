@@ -1,13 +1,16 @@
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
 from apps.books.views import (book_list, book_detail, create_book, download_book)
-from apps.exams import views
+from apps.settingis import views
 from apps.users.views import (login_view, reg_view, logout_view)
 
 from django.conf.urls.static import static
 from django.conf import settings
+
+
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('exams/', include('apps.exams.urls')),
     path('', views.home, name='home'),
     path('books/', book_list, name='books'),
     path('contact/', views.contact, name='contact'),
