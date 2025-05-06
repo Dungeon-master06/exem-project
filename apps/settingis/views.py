@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 
 
 def home(request):
-    settings = Settings.objects.latest('id')
+    settings = Settings.objects.order_by('-id').first() 
     social_links = SocialLink.objects.all()
     context = {
         'settings': settings,
@@ -15,7 +15,7 @@ def home(request):
 
 
 def contact(request):
-    settings = Settings.objects.latest('id')
+    settings = Settings.objects.order_by('-id').first()
     social_links = SocialLink.objects.all()
     context = {
         'settings': settings,
@@ -25,7 +25,7 @@ def contact(request):
 
 
 def faq(request):
-    settings = Settings.objects.latest('id')
+    settings = Settings.objects.order_by('-id').first()
     faqs = FAQ.objects.all()
     social_links = SocialLink.objects.all()
     context = {

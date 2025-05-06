@@ -7,8 +7,8 @@ from django.shortcuts import redirect
 from django.contrib.admin.views.decorators import staff_member_required
 
 
-def book_list(request):
-    settings = Settings.objects.latest('id')
+def book_list(request): 
+    settings = Settings.objects.order_by('-id').first()
     categories = Category.objects.all()
     social_links = SocialLink.objects.all()
     category_id = request.GET.get('category', '')
@@ -37,7 +37,7 @@ def book_list(request):
 
 def book_detail(request, pk):
     book = get_object_or_404(Book, pk=pk)
-    settings = Settings.objects.latest('id')
+    settings = Settings.objects.order_by('-id').first()
     social_links = SocialLink.objects.all()
     context = {
         'book': book,
@@ -53,7 +53,7 @@ def download_book(request, pk):
 @staff_member_required(login_url='/login/')
 def create_book(request):
     social_links = SocialLink.objects.all()
-    settings = Settings.objects.latest('id')
+    settings = Settings.objects.order_by('-id').first()
     if request.method == 'POST':
         book_form = BookForm(request.POST, request.FILES)
         category_form = CategoryForm(request.POST)
