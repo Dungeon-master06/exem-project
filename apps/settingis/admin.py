@@ -7,6 +7,6 @@ class FAQAdmin(admin.ModelAdmin):
 
 @admin.register(SocialLink)
 class SocialLinkAdmin(admin.ModelAdmin):
-    list_display = ('name', 'url', 'icon')
+    list_display = ('name', 'url', 'icon',)
 
 admin.site.register(Settings)

@@ -1,11 +1,61 @@
-<h1>Доступные тесты</h1>
-<ul>
-    {% for test in tests %}
-      <li>Тема: {{test.subject}} |
-        <a href="{% url 'take_test' test.id %}">
-            {{test.title}}
-        </a>
-        
-      </li>
-    {% endfor %}
-</ul>
+<!DOCTYPE html>
+{% load static %}
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Тесты</title>
+    <link href="{% static 'css/bootstrap.css' %}" rel="stylesheet">
+</head>
+<body class="bg-light">
+  {% include "header.html" %}
+  <div class="container py-4">
+      <h1 class="mb-4">📘 Список тестов</h1>
+      <!-- Статистика -->
+      <div class="row text-center mb-4">
+        <div class="col-md-12">
+          <div class="bg-white shadow-sm rounded p-3 border">
+            <h5 class="mb-0">📝 Тестов</h5>
+            <p class="fs-4 fw-bold mb-0">{{ total_tests }}</p>
+          </div>
+        </div>
+
+      </div>
+      <!-- Фильтры -->
+      <form method="get" class="mb-4 row g-2">
+          <div class="col-md-8">
+              <input type="text" name="q" class="form-control" placeholder="🔍 Поиск по названию" value="{{ search_query }}">
+          </div>
+          <div class="col-md-2">
+              <button type="submit" class="btn btn-primary w-100">Фильтровать</button>
+          </div>
+          <div class="col-md-2">
+              <a href="{% url 'books' %}" class="btn btn-outline-secondary w-100">Сброс</a>
+          </div>
+      </form>
+
+      <div class="row row-cols-1 row-cols-md-3 g-4">
+          {% for test in tests %}
+              <div class="col">
+                  <div class="card h-100 bg-white shadow-sm">
+                      {% if test.image %}
+                          <img src="{{ test.image.url }}" class="card-img-top" alt="{{ test.title }}">
+                      {% else %}
+                          <img src="https://mdbcdn.b-cdn.net/img/new/standard/city/062.webp" class="card-img-top" alt="Тест">
+                      {% endif %}
+                      <div class="card-body d-flex flex-column">
+                          <h5 class="card-title">{{ test.title }}</h5>
+                          <h6 class="card-subtitle mb-2 text-muted">{{ test.subject }}</h6>
+                          <p class="card-text">{{ test.description|truncatewords:20 }}</p>
+                          <a href="{% url 'take_test' test.id %}" class="btn btn-primary mt-auto">📝 Пройти тест</a>
+                      </div>
+                  </div>
+              </div>
+          {% empty %}
+              <p>Нет доступных тестов.</p>
+          {% endfor %}
+      </div>
+  </div>
+  {% include "footer.html" %}
+</body>
+<script src="{% static 'js/bootstrap.js' %}"></script>
+</html>

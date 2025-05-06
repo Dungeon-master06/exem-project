@@ -3,13 +3,15 @@ from django.db import models
 
 class Test(models.Model):
     title = models.CharField(verbose_name='Название теста', max_length=200)
+    image = models.ImageField("Изображение", upload_to='images/tests/', blank=True, null=True)
     subject = models.CharField("Предмет", max_length=100)
     description = models.TextField("Описание", blank=True, null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
         verbose_name = 'Тест'
         verbose_name_plural = 'Тесты'
-        ordering = ['title']
+        ordering = ['-created_at']
     
     def __str__(self):
         return self.title
@@ -23,8 +25,8 @@ class Question(models.Model):
     text = models.TextField(verbose_name="Текст вопроса")
 
     class Meta:
-        verbose_name = 'Вопрос'
-        verbose_name_plural = 'Вопросы'
+        verbose_name = 'Вопрос теста'
+        verbose_name_plural = 'Вопросы теста'
         ordering = ['id']
     
     def __str__(self):
@@ -45,4 +47,4 @@ class Answer(models.Model):
         ordering = ['question', 'id']
     
     def __str__(self):
-        return f"Ответ: {self.text[:30]}... ({'✅' if self.is_correct else '❎'})"
+        return f"Ответ: {self.text[:30]}... ({'✔' if self.is_correct else '❌'})"

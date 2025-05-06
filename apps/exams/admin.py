@@ -9,11 +9,15 @@ class AnswerInline(admin.TabularInline):
 
 class QuestionAdmin(admin.ModelAdmin):
     inlines = [AnswerInline]
+    list_display = ('text', 'test')
+    list_filter = ('test',)
 
 
 class TestAdmin(admin.ModelAdmin):
     list_display = ('title', 'subject')
     search_fields = ('title', 'subject')
+    list_filter = ('subject',)
+    fields = ('title', 'subject', 'description', 'image')
 
 
 admin.site.register(Test, TestAdmin)

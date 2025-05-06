@@ -9,7 +9,45 @@
 </head>
 <body class="body-bg bg-light">
 	{% include "header.html" %}
-	{% include "cards.html" %}
+	<section class="container py-4">
+    <h1 class="mb-4 text-center">📌 Актуальные Тесты</h1>
+      <!-- Статистика -->
+    <div class="row text-center mb-4 mt-4">
+      <div class="col-md-6">
+        <div class="bg-white shadow-sm rounded p-3 border">
+          <h5 class="mb-0">👥 Пользователей</h5>
+          <p class="fs-4 fw-bold mb-0">{{ total_users }}</p>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="bg-white shadow-sm rounded p-3 border">
+          <h5 class="mb-0">📝 Тестов</h5>
+          <p class="fs-4 fw-bold mb-0">{{ total_tests }}</p>
+        </div>
+      </div>
+    </div>
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+      {% for test in recent_tests %}
+          <div class="col">
+              <div class="card h-100 bg-white shadow-sm">
+                  {% if test.image %}
+                      <img src="{{ test.image.url }}" class="card-img-top" alt="{{ test.title }}">
+                  {% else %}
+                      <img src="https://mdbcdn.b-cdn.net/img/new/standard/city/062.webp" class="card-img-top" alt="Тест">
+                  {% endif %}
+                  <div class="card-body d-flex flex-column">
+                      <h5 class="card-title">{{ test.title }}</h5>
+                      <h6 class="card-subtitle mb-2 text-muted">{{ test.subject }}</h6>
+                      <p class="card-text">{{ test.description|truncatewords:20 }}</p>
+                      <a href="{% url 'take_test' test.id %}" class="btn btn-primary mt-auto">📝 Пройти тест</a>
+                  </div>
+              </div>
+          </div>
+      {% empty %}
+          <p>Нет доступных тестов.</p>
+      {% endfor %}
+    </div>
+  </section>
 	{% include "footer.html" %}
 </div>
 </body>
