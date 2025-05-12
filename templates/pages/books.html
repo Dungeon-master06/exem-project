@@ -48,8 +48,14 @@
 
             <!-- Категории -->
             <div class="mb-4 text-center">
-                <a href="{% url 'books' %}" class="btn btn-outline-dark btn-sm {% if not category_id %}active{% endif %}">Все</a>
-                {% for category in categories %}
+                <button type="button"
+                        class="btn btn-outline-secondary btn-sm ms-auto"
+                        data-bs-toggle="modal"
+                        data-bs-target="#allCategoriesModal">
+                    ☰
+                </button>
+                <a href="{% url 'books' %}" class="btn btn-outline-dark btn-sm {% if not category_id %}active{% endif %}">Сброс</a>
+                {% for category in categories|slice:":5" %}
                     <a href="?category={{ category.id }}" class="btn btn-outline-primary btn-sm {% if category_id|add:'' == category.id|stringformat:'s' %}active{% endif %}">
                         {{ category.title }}
                     </a>
@@ -81,7 +87,29 @@
                 {% endfor %}
             </div>
         </div>
-    {% include "footer.html" %}
+        {% include "footer.html" %}
+        <!-- Модальное окно по центру -->
+        <div class="modal fade" id="allCategoriesModal" tabindex="-1" aria-labelledby="allCategoriesLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable"> <!-- 👈 Центрирование -->
+                <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="allCategoriesLabel">🗂 Выберите категорию книг</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="d-flex flex-wrap gap-2">
+                    {% for category in categories %}
+                        <a href="?category={{ category.id }}" class="btn btn-outline-primary btn-sm {% if selected_category|add:'' == category.id|stringformat:'s' %}active{% endif %}">
+                        {{ category.title }}
+                        </a>
+                    {% endfor %}
+                    </div>
+                </div>
+                </div>
+            </div>
+        </div>
+
 </body>
 <script src="{% static 'js/bootstrap.js' %}"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </html>
