@@ -14,6 +14,9 @@ def book_list(request):
     category_id = request.GET.get('category', '')
     search_query = request.GET.get('q', '')
     author_filter = request.GET.get('author', '')
+    if 'filter' in request.GET:
+        search_query = ''
+        author_filter = ''
     if category_id:
         books = Book.objects.filter(category__id=category_id)
     else:
