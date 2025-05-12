@@ -5,6 +5,7 @@ from apps.settingis.models import Settings, SocialLink
 from .form import BookForm, CategoryForm
 from django.shortcuts import redirect
 from django.contrib.admin.views.decorators import staff_member_required
+from django.core.paginator import Paginator
 
 
 def book_list(request): 
@@ -14,9 +15,6 @@ def book_list(request):
     category_id = request.GET.get('category', '')
     search_query = request.GET.get('q', '')
     author_filter = request.GET.get('author', '')
-    if 'filter' in request.GET:
-        search_query = ''
-        author_filter = ''
     if category_id:
         books = Book.objects.filter(category__id=category_id)
     else:
@@ -25,11 +23,20 @@ def book_list(request):
         books = books.filter(title__icontains=search_query)
     if author_filter:
         books = books.filter(author__icontains=author_filter)
+    if 'filter' in request.GET:
+        search_query = ''
+        author_filter = ''
+    paginator = Paginator(books, 5)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
     context = {
         'books': books,
         'settings': settings,
         'categories': categories,
         "category_id": category_id,
+        'books': page_obj,
+        'page_obj': page_obj,
+        'selected_category': request.GET.get('category'),
         'search_query': search_query,
         'author_filter': author_filter,
         'social_links': social_links,

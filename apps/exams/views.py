@@ -3,6 +3,7 @@ from django.contrib.auth.decorators import login_required
 from .models import Test, Answer
 from apps.books.models import Book
 from apps.settingis.models import Settings, SocialLink
+from django.core.paginator import Paginator
 
 
 def test_list(request):
@@ -10,10 +11,15 @@ def test_list(request):
     settings = Settings.objects.order_by('-id').first()
     social_links = SocialLink.objects.all()
     tests = Test.objects.all()
+    paginator = Paginator(tests, 6)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
     context = { 
-        'tests':tests,
         'settings':settings,
         'social_links':social_links,
+        'tests': page_obj,
+        'page_obj': page_obj,
+        'recent_tests': Test.objects.order_by('-created_at')[:3],
         'total_tests': Test.objects.count()
     }
     return render(request, 'exams/test_list.html', context)
