@@ -3,7 +3,7 @@ from django.db import models
 
 class Test(models.Model):
     title = models.CharField(verbose_name='Название теста', max_length=200)
-    image = models.ImageField("Изображение", upload_to='images/tests/', blank=True, null=True)
+    image = models.ImageField("Изображение", upload_to='tests/', blank=True, null=True)
     subject = models.CharField("Предмет", max_length=100)
     description = models.TextField("Описание", blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)

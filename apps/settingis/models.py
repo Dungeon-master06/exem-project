@@ -4,7 +4,7 @@ from ckeditor.fields import RichTextField
 
 class Settings(models.Model):
     name = models.CharField(max_length=100, verbose_name="Название сайта")
-    logo = models.ImageField(upload_to='images', verbose_name="Лого")
+    logo = models.ImageField(upload_to='logo/', verbose_name="Лого")
     phone = models.CharField(
         max_length=20, verbose_name="Телефон",
         help_text="Вы можете начать номер телефона с +996 (700) 700 700")
