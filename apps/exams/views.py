@@ -22,7 +22,7 @@ def test_list(request):
         'recent_tests': Test.objects.order_by('-created_at')[:3],
         'total_tests': Test.objects.count()
     }
-    return render(request, 'exams/test_list.html', context)
+    return render(request, 'pages/exams/test_list.html', context)
 
 @login_required(login_url='login')
 def take_test(request, test_id):
@@ -53,10 +53,10 @@ def take_test(request, test_id):
             'settings':settings,
             'social_links':social_links
         }
-        return render(request, 'exams/test_result.html', context)
+        return render(request, 'pages/exams/test_result.html', context)
     context = {
         'test':test,
         'settings':settings,
         'social_links':social_links
     }
-    return render(request, 'exams/take_test.html', context)
+    return render(request, 'pages/exams/take_test.html', context)

@@ -43,7 +43,7 @@ def book_list(request):
         'total_books': Book.objects.count(),
         'total_categories': Category.objects.count(),
     }
-    return render(request, 'pages/books.html', context)
+    return render(request, 'pages/books/books.html', context)
 
 def book_detail(request, pk):
     book = get_object_or_404(Book, pk=pk)
@@ -54,7 +54,7 @@ def book_detail(request, pk):
         'social_links': social_links,
         'settings': settings
     }
-    return render(request, 'pages/book-detail.html', context)
+    return render(request, 'pages/books/book-detail.html', context)
 
 def download_book(request, pk):
     book = get_object_or_404(Book, pk=pk)
@@ -84,4 +84,4 @@ def create_book(request):
         'social_links': social_links,
         'settings': settings
     }
-    return render(request, 'pages/book_form.html', context)
+    return render(request, 'pages/books/book_form.html', context)

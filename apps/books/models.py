@@ -1,6 +1,7 @@
 from django.db import models
 from django.urls import reverse
 from django.core.validators import MinValueValidator, MaxValueValidator
+from ckeditor.fields import RichTextField
 
 
 class Category(models.Model):
@@ -23,7 +24,7 @@ class Book(models.Model):
     category = models.ManyToManyField(Category, related_name='books', verbose_name="категория")
     title = models.CharField(max_length=255, verbose_name="Название")
     author = models.CharField(max_length=255, verbose_name="Автор")
-    description = models.TextField(blank=True, verbose_name='Описание')
+    description = RichTextField(blank=True, verbose_name='Описание')
     file = models.FileField(upload_to='books/' , verbose_name="Файл книги (.pdf)")
     cover_image = models.ImageField(upload_to='books/cover-image/', blank=True, null=True, verbose_name="Обложка книги")
     uploaded_at = models.DateTimeField(auto_now_add=True, verbose_name="Дата загрузки")

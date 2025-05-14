@@ -1,11 +1,12 @@
 from django.db import models
+from ckeditor.fields import RichTextField
 
 
 class Test(models.Model):
     title = models.CharField(verbose_name='Название теста', max_length=200)
     image = models.ImageField("Изображение", upload_to='tests/', blank=True, null=True)
     subject = models.CharField("Предмет", max_length=100)
-    description = models.TextField("Описание", blank=True, null=True)
+    description = RichTextField("Описание", blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
@@ -22,7 +23,7 @@ class Question(models.Model):
         Test, verbose_name="Тест", 
         on_delete=models.CASCADE, related_name="questions"
     )
-    text = models.TextField(verbose_name="Текст вопроса")
+    text = RichTextField(verbose_name="Текст вопроса")
 
     class Meta:
         verbose_name = 'Вопрос теста'
