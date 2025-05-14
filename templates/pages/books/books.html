@@ -26,7 +26,7 @@
             </div>
             <!-- Фильтры -->
             <form method="get" class="mb-4 row g-2">
-                <div class="col-md-4">
+                <div class="col-md-6">
                     <input type="text" name="q" class="form-control" placeholder="🔍 Поиск по названию" value="{{ search_query }}">
                 </div>
                 <div class="col-md-4">
@@ -71,7 +71,7 @@
                                     <a href="{{ book.get_absolute_url }}" class="text-decoration-none text-dark">{{ book.title }}</a>
                                 </h5>
                                 <h6 class="card-subtitle mb-2 text-muted">{{ book.author }}</h6>
-                                <p class="card-text">{{ book.description|truncatewords:10 }}</p>
+                                <p class="card-text">{{ book.description|truncatewords:10|safe }}</p>
                                 <div class="mt-auto">
                                     <a href="{{ book.get_absolute_url }}" class="btn btn-primary btn-sm w-100 mb-2">Подробнее 📖</a>
                                 </div>
@@ -130,11 +130,15 @@
                     </div>
                     <div class="modal-body">
                         <div class="d-flex flex-wrap gap-2">
+                            {% if categories %}
                             {% for category in categories %}
                             <a href="?category={{ category.id }}" class="btn btn-outline-primary btn-sm {% if selected_category|add:'' == category.id|stringformat:'s' %}active{% endif %}">
                                 {{ category.title }}
                             </a>
                             {% endfor %}
+                            {% else %}
+                            <p>Категории пока нет.</p>
+                            {% endif %}
                         </div>
                     </div>
                 </div>

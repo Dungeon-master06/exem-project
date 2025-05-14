@@ -17,7 +17,7 @@
             <div class="card-body">
                 <h2 class="card-title text-center">{{ book.title }}</h2>
                 <h6 class="card-subtitle mb-3 text-muted text-center">{{ book.author }}</h6>
-                <p class="card-text mt-2 text-center">{{ book.description }}</p>
+                <p class="card-text mt-2 text-center">{{ book.description|safe }}</p>
                 <div class="d-grid gap-2">
                     <a href="{% url 'download-book' book.pk %}" class="btn btn-success">📥 Скачать книгу</a>
                     <a href="{{ book.file.url }}" class="btn btn-primary">📖 Прочить книгу</a>

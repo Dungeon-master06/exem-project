@@ -16,7 +16,7 @@
           {% csrf_token %}
           {% for question in test.questions.all %}
               <div class="mb-4">
-                  <h5>{{ forloop.counter }}. {{ question.text }}</h5>
+                  <h5>{{ forloop.counter }}. {{ question.text|safe }}</h5>
                   {% for answer in question.answers.all %}
                       <div class="form-check">
                           <input class="form-check-input" type="radio"

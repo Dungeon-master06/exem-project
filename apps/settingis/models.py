@@ -10,7 +10,7 @@ class Settings(models.Model):
         help_text="Вы можете начать номер телефона с +996 (700) 700 700")
     email = models.CharField(max_length=100, verbose_name="E-mail")
     address = models.CharField(max_length=255, verbose_name="Адрес",null=True)
-    map = RichTextField(verbose_name="карта", null=True)
+    map = models.TextField(verbose_name="карта", null=True)
 
     def __str__(self):
         return f"{self.name} {self.phone}"
