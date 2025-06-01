@@ -1,4 +1,5 @@
 from django.shortcuts import render, get_object_or_404
+from django.contrib.auth.decorators import login_required
 from django.http import FileResponse
 from .models import Book, Category
 from apps.settingis.models import Settings, SocialLink
@@ -55,7 +56,7 @@ def book_detail(request, pk):
         'settings': settings
     }
     return render(request, 'pages/books/book-detail.html', context)
-
+@login_required(login_url='login')
 def download_book(request, pk):
     book = get_object_or_404(Book, pk=pk)
     return FileResponse(book.file.open('rb'), as_attachment=True, filename=book.file.name)
